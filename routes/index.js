@@ -40,15 +40,17 @@ router.post('/subtract',async(req,res)=>{
             subtrahend:req.body.subtrahend,
             borrowing:req.body?.borrowing
         }
+        if(payload.minuend < payload.subtrahend){
+          return res.json({message:"minuend must be greater than or equals to subtrahend "})
+        }
         let result=[];
         for(let i=1;i<=payload.questions;i++){
-        //get the smallest number of the given minuend  and biggest
           const get_num=await create_numbers(payload.minuend,payload.subtrahend)
           let minuend=get_num.minuend;
           let subtrahend=get_num.subtrahend;
           let check_borrowing=await borrowing(minuend.toString(),subtrahend.toString())
           if(payload.borrowing == true){
-              while(check_borrowing == false){
+              while(check_borrowing == false || minuend < subtrahend){
                 const get_nums=await create_numbers(payload.minuend,payload.subtrahend)
                  minuend=get_nums.minuend;
                  subtrahend=get_nums.subtrahend;
@@ -56,7 +58,7 @@ router.post('/subtract',async(req,res)=>{
               }
           }
           if(payload.borrowing == false){
-            while(check_borrowing == true){
+            while(check_borrowing == true ||  minuend < subtrahend ){
               const get_nums=await create_numbers(payload.minuend,payload.subtrahend)
                minuend=get_nums.minuend;
                subtrahend=get_nums.subtrahend;
