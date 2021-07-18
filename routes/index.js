@@ -12,7 +12,6 @@ const getMin=(number)=>{
 const borrowing=(first=6399,sec=933)=>{
  for(let i=first.length-1;i>=0;i--){
      for(let j=sec.length-1;j>=0;j--){
-         console.log(first[i],sec[j],first,sec)
          if(first[i] < sec[j]){
              return true;
          }
@@ -79,8 +78,7 @@ router.post('/subtract',async(req,res)=>{
             minuend:minuend,
             subtrahend:subtrahend,
             correct_answer:correct_answer,
-            options:options,
-            check_borrowing:check_borrowing
+            options:options
             }
           }
           result.push(resp)
